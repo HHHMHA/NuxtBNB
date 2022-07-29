@@ -2,8 +2,7 @@
   <div>
     <img :src="home.images[0]" /><br />
     {{ home.title }}<br />
-    {{ home.location.address }} {{ home.location.city }} {{ home.location.state
-    }}<br />
+    {{ home.location.address }} {{ home.location.city }} {{ home.location.state }}<br />
     {{ home.guests }} guests<br />
     ${{ home.pricePerNight }} / night<br />
   </div>
