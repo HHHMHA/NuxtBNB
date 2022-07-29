@@ -15,6 +15,7 @@ import homes from '~/data/homes'
 
 export default {
   name: 'IndexPage',
+  layout: 'default',
   head() {
     return {
       title: 'Homepage',
