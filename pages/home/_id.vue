@@ -5,7 +5,8 @@
     </div>
     {{ home.title }}<br />
     ${{ home.pricePerNight }} / night<br />
-    <img src="/images/marker.svg" width="20" height="20" alt="">{{ home.location.address }} {{ home.location.city }} {{ home.location.state }} {{ home.location.country }}<br />
+    <img src="/images/marker.svg" width="20" height="20" alt="">{{ home.location.address }} {{ home.location.city }}
+    {{ home.location.state }} {{ home.location.country }}<br />
     <img src="/images/star.svg" width="20" height="20" alt="">{{ home.reviewValue }}<br />
     {{ home.guests }} guests, {{ home.bedrooms }} rooms, {{ home.beds }} beds, {{ home.bathrooms }} bath<br />
     {{ home.description }}
@@ -21,11 +22,17 @@ export default {
   head() {
     return {
       title: this.home.title,
-      script: [{
-        src: "https://maps.googleapis.com/maps/api/js?key=&libraries=places",
-        hid: "map",
-        defer: true,
-      }]
+      script: [
+        {
+          src: "https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap",
+          hid: "map",
+          defer: true,
+          skip: process.client && window.mapLoaded
+        },
+        {
+          innerHTML: "window.initMap = function() { window.mapLoaded = true }"
+        }
+      ]
     };
   },
   data() {
@@ -40,12 +47,12 @@ export default {
       zoom: 18,
       center: position,
       disableDefaultUI: true,
-      zoomControl: true,
-    }
+      zoomControl: true
+    };
     const map = new window.google.maps.Map(this.$refs.map, mapOptions);
 
     const marker = new window.google.maps.Marker({
-      position,
+      position
     });
     marker.setMap(map);
   },
