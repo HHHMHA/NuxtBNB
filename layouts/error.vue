@@ -10,7 +10,7 @@ export default {
   name: "error",
   head() {
     return {
-      title: 'Big Problems';
+      title: 'Big Problems'
     };
   },
   props: {
