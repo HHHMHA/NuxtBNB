@@ -6,6 +6,7 @@ export default function(context, inject) {
 
   inject("maps", {
     showMap,
+    makeAutoComplete,
   })
 
   function addScript() {
@@ -30,10 +31,7 @@ export default function(context, inject) {
       });
       return;
     }
-    renderMap(canvas, lat, lng);
-  }
 
-  function renderMap(canvas, lat, lng) {
     const position = new window.google.maps.LatLng(lat, lng);
 
     const mapOptions = {
@@ -48,5 +46,23 @@ export default function(context, inject) {
       position
     });
     marker.setMap(map);
+  }
+
+  function makeAutoComplete(input) {
+    if (!isLoaded) {
+      waiting.push({
+        fn: makeAutoComplete,
+        arguments,
+      });
+      return;
+    }
+
+    const autoComplete = new window.google.amps.places.AutoComplete(input, {
+      types: ['(cities)']
+    });
+    autoComplete.addListener('place_changed', () => {
+      const place = autoComplete.getPlace();
+      input.dispatchEvent( new CustomEvent('changed', { detail: place }) );
+    });
   }
 }
