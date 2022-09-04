@@ -1,6 +1,6 @@
 export default function(context, inject) {
-  let mapLoaded = false;
-  let mapArgs = null;
+  let isLoaded = false;
+  let waiting = [];
 
   addScript();
 
@@ -12,24 +12,25 @@ export default function(context, inject) {
     const script = document.createElement("script");
     script.src = "https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap";
     script.async = true;
-    window.initMap = initMap;
+    window.initMap = initGoogleMaps;
     document.head.appendChild(script);
   }
 
-  function initMap() {
-    mapLoaded = true;
-    if (!mapArgs)
-      return;
-
-    let { canvas, lat, lng } = mapArgs;
-    showMap(canvas, lat, lng);
-    mapArgs = null;
+  function initGoogleMaps() {
+    isLoaded = true;
+    waiting.forEach( item => item.fn?.(...item.arguments) );
+    waiting = [];
   }
 
   function showMap(canvas, lat, lng) {
-    mapArgs = { canvas, lat, lng };
-    if (mapLoaded)
-      renderMap(canvas, lat, lng);
+    if (!isLoaded) {
+      waiting.push({
+        fn: showMap,
+        arguments,
+      });
+      return;
+    }
+    renderMap(canvas, lat, lng);
   }
 
   function renderMap(canvas, lat, lng) {
