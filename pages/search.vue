@@ -1,5 +1,6 @@
 <template>
-  <div>{{ lat }} / {{ lng }} / {{ label }}<br />
+  <div>Results for {{ label }}<br />
+    <div style="height: 800px; width: 800px; float: right;" ref="map"></div>
     <div v-if="homes.length > 0">
       <home-row v-for="home in homes"
                 :key="home.objectID"
@@ -26,9 +27,9 @@ export default {
     this.label = to.query.label;
     this.lat = to.query.lat;
     this.lng = to.query.lng;
+    this.updateMap();
     next();
   },
-
   async asyncData({ query, $dataApi }) {
     const data = await $dataApi.getHomesByLocation(query.lat, query.lng);
     return {
@@ -38,6 +39,14 @@ export default {
       label: query.label,
     };
   },
+  mounted() {
+    this.updateMap();
+  },
+  methods: {
+    updateMap() {
+      this.$maps.showMap(this.$refs.map, this.lat, this.lng);
+    },
+  }
 };
 </script>
 
