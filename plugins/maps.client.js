@@ -6,8 +6,8 @@ export default function(context, inject) {
 
   inject("maps", {
     showMap,
-    makeAutoComplete,
-  })
+    makeAutoComplete
+  });
 
   function addScript() {
     const script = document.createElement("script");
@@ -19,15 +19,15 @@ export default function(context, inject) {
 
   function initGoogleMaps() {
     isLoaded = true;
-    waiting.forEach( item => item.fn?.(...item.arguments) );
+    waiting.forEach(item => item.fn?.(...item.arguments));
     waiting = [];
   }
 
-  function showMap(canvas, lat, lng) {
+  function showMap(canvas, lat, lng, markers = []) {
     if (!isLoaded) {
       waiting.push({
         fn: showMap,
-        arguments,
+        arguments
       });
       return;
     }
@@ -42,27 +42,42 @@ export default function(context, inject) {
     };
     const map = new window.google.maps.Map(canvas, mapOptions);
 
-    const marker = new window.google.maps.Marker({
-      position
-    });
-    marker.setMap(map);
+    if (markers.length === 0) {
+      const marker = new window.google.maps.Marker({
+        position
+      });
+      marker.setMap(map);
+      return;
+    }
+
+    const bounds = new window.google.maps.LatLngBounds();
+    markers.forEach(home => {
+      const position =  new window.google.maps.LatLng(home.lat, home.lng);
+      const marker = new window.google.maps.Marker({
+        position
+      });
+      marker.setMap(map);
+      bounds.extend(position);
+    })
+
+    map.fitBounds(bounds);
   }
 
   function makeAutoComplete(input) {
     if (!isLoaded) {
       waiting.push({
         fn: makeAutoComplete,
-        arguments,
+        arguments
       });
       return;
     }
 
     const autoComplete = new window.google.amps.places.AutoComplete(input, {
-      types: ['(cities)']
+      types: ["(cities)"]
     });
-    autoComplete.addListener('place_changed', () => {
+    autoComplete.addListener("place_changed", () => {
       const place = autoComplete.getPlace();
-      input.dispatchEvent( new CustomEvent('changed', { detail: place }) );
+      input.dispatchEvent(new CustomEvent("changed", { detail: place }));
     });
   }
 }
