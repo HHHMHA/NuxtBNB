@@ -54,7 +54,12 @@ export default function(context, inject) {
     markers.forEach(home => {
       const position =  new window.google.maps.LatLng(home.lat, home.lng);
       const marker = new window.google.maps.Marker({
-        position
+        position,
+        label: {
+          text: `$${home.pricePerNight}`,
+          className: 'marker',
+        },
+        icon: 'https://maps.gstatic.com/mapfiles/transparent.png'
       });
       marker.setMap(map);
       bounds.extend(position);
