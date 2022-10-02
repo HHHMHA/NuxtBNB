@@ -38,13 +38,21 @@ export default function(context, inject) {
       zoom: 18,
       center: position,
       disableDefaultUI: true,
-      zoomControl: true
+      zoomControl: true,
+      styles: [{
+        featureType: 'poi.business',
+        elementType: 'labels.icon',
+        stylers: [{
+          visibility: 'off',
+        }],
+      }],
     };
     const map = new window.google.maps.Map(canvas, mapOptions);
 
     if (markers.length === 0) {
       const marker = new window.google.maps.Marker({
-        position
+        position,
+        clickable: false,
       });
       marker.setMap(map);
       return;
@@ -55,9 +63,10 @@ export default function(context, inject) {
       const position =  new window.google.maps.LatLng(home.lat, home.lng);
       const marker = new window.google.maps.Marker({
         position,
+        clickable: false,
         label: {
           text: `$${home.pricePerNight}`,
-          className: 'marker',
+          className: `marker home-${home.id}`,
         },
         icon: 'https://maps.gstatic.com/mapfiles/transparent.png'
       });

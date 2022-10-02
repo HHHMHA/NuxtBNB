@@ -3,7 +3,7 @@
     <div style="height: 800px; width: 800px; float: right;" ref="map"></div>
     <div v-if="homes.length > 0">
       <nuxt-link :to="`/home/${home.objectID}`" v-for="home in homes" :key="home.objectID">
-      <home-row :home="home"></home-row>
+      <home-row :home="home" @mouseover.native="highlightMarker(home.objectID, true)" @mouseout.native="highlightMarker(home.objectID, false)"></home-row>
       </nuxt-link>
     </div>
     <div v-else>
@@ -42,6 +42,10 @@ export default {
     this.updateMap();
   },
   methods: {
+    highlightMarker(homeId, isHighlighted) {
+      const marker = document.getElementsByClassName(`home-${homeId}`)[0];
+      marker?.classList?.toggle('marker--highlight', isHighlighted);
+    },
     updateMap() {
       this.$maps.showMap(this.$refs.map, this.lat, this.lng, this.getHomeMarkers());
     },
@@ -50,6 +54,7 @@ export default {
         return {
           ...home._geoloc,
           pricePerNight: home.pricePerNight,
+          id: home.objectID,
         }
       })
     },
@@ -64,5 +69,11 @@ export default {
   font-weight: bold;
   border-radius: 20px;
   padding: 5px 8px;
+}
+
+.marker--highlight {
+  color: white !important;
+  background: black;
+  border-color: black;
 }
 </style>
