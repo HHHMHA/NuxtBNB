@@ -25,12 +25,16 @@
 
 <script>
 import shortDate from "@/utils/shortDate";
+import ShortText from "@/components/ShortText";
 
 export default {
   name: "PropertyReviews",
+  components: {
+    ShortText,
+  },
   props: {
     reviews: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },

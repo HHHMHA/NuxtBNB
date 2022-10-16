@@ -17,43 +17,43 @@ export default {
       required: true,
       type: Number,
     },
-    data() {
-      return {
-        isExpanded: false,
-        chunks: [],
-      };
-    },
-    created() {
-      this.chunks = this.getChunks();
-    },
-    computed: {
-      isTooLong() {
-        return this.chunks.length === 2;
-      },
-      displayText() {
-        if (!this.isTooLong() || this.isExpanded) {
-          return this.chunks.join(' ');
-        }
-        return this.chunks[0] + '...';
-      },
-    },
-    methods: {
-      getChunks() {
-        if (this.text.length <= this.target)
-          return [this.text]
-
-        const position = this.text.indexOf(' ', this.target);
-
-        if (position === -1)
-          return [this.text];
-
-        return [
-          this.text.substring(0, position),
-          this.text.substring(position),
-        ]
-      },
-    }
   },
+  data() {
+    return {
+      isExpanded: false,
+      chunks: [],
+    };
+  },
+  created() {
+    this.chunks = this.getChunks();
+  },
+  computed: {
+    isTooLong() {
+      return this.chunks.length === 2;
+    },
+    displayText() {
+      if (!this.isTooLong || this.isExpanded) {
+        return this.chunks.join(' ');
+      }
+      return this.chunks[0] + '...';
+    },
+  },
+  methods: {
+    getChunks() {
+      if (this.text.length <= this.target)
+        return [this.text]
+
+      const position = this.text.indexOf(' ', this.target);
+
+      if (position === -1)
+        return [this.text];
+
+      return [
+        this.text.substring(0, position),
+        this.text.substring(position),
+      ]
+    },
+  }
 }
 </script>
 
