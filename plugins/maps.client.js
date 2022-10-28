@@ -1,6 +1,7 @@
 export default function(context, inject) {
   let isLoaded = false;
   let waiting = [];
+  window.initMap = initGoogleMaps;
 
   addScript();
 
@@ -13,7 +14,6 @@ export default function(context, inject) {
     const script = document.createElement("script");
     script.src = "https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap";
     script.async = true;
-    window.initMap = initGoogleMaps;
     document.head.appendChild(script);
   }
 

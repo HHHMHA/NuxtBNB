@@ -28,6 +28,7 @@ export default {
   plugins: [
     "~/plugins/maps.client",
     "~/plugins/dataApi",
+    "~/plugins/auth.client",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -65,5 +66,15 @@ export default {
     loaders: {
       limit: 0,
     },
-  }
+  },
+
+  publicRuntimeConfig: {
+    auth: {
+      cookieName: "idToken",
+      clientId: '',
+    },
+  },
+  privateRuntimeConfig: {
+
+  },
 };
