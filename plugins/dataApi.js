@@ -1,10 +1,10 @@
-export default function(context, inject) {
+import {unWrap, getErrorResponse} from "@/utils/fetchUtils";
+
+export default function({ $config }, inject) {
   // TODO: move to .env
-  const appId = 'ZQ9UF7RP1U';
-  const apiKey = '2e3cdcce6886af847e405a224b28f275';
   const headers = {
-    'X-Algolia-API-Key': apiKey,
-    'X-Algolia-Application-Id': appId,
+    'X-Algolia-API-Key': $config.algolia.key,
+    'X-Algolia-Application-Id': $config.algolia.appId,
   }
 
   inject('dataApi', {
@@ -16,7 +16,7 @@ export default function(context, inject) {
 
   async function getHome(homeId) {
     try {
-      const response = await fetch(`https://${appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
+      const response = await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
         headers,
       });
 
@@ -29,7 +29,7 @@ export default function(context, inject) {
 
   async function getReviewsByHomeId(homeId) {
     try {
-      const response = await fetch(`https://${appId}-dsn.algolia.net/1/indexes/reviews/query`, {
+      const response = await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/reviews/query`, {
         headers,
         method: 'POST',
         body: JSON.stringify({
@@ -48,7 +48,7 @@ export default function(context, inject) {
 
   async function getUserByHomeId(homeId) {
     try {
-      const response = await fetch(`https://${appId}-dsn.algolia.net/1/indexes/users/query`, {
+      const response = await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/users/query`, {
         headers,
         method: 'POST',
         body: JSON.stringify({
@@ -66,7 +66,7 @@ export default function(context, inject) {
 
   async function getHomesByLocation(lat, lng, radiusInMeters = 1500) {
     try {
-      const response = await fetch(`https://${appId}-dsn.algolia.net/1/indexes/homes/query`, {
+      const response = await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/homes/query`, {
         headers,
         method: 'POST',
         body: JSON.stringify({
@@ -81,26 +81,6 @@ export default function(context, inject) {
     }
     catch (error) {
       return getErrorResponse(error);
-    }
-  }
-
-  async function unWrap(response) {
-    const json = await response.json();
-    const { ok, status, statusText } = response;
-    return {
-      json,
-      ok,
-      status,
-      statusText,
-    }
-  }
-
-  function getErrorResponse(error) {
-    return {
-      ok: false,
-      status: 500,
-      statusText: error.message,
-      json: {},
     }
   }
 }

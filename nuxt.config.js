@@ -42,6 +42,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     "~/modules/auth",
+    "~/modules/algolia",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
@@ -74,8 +75,15 @@ export default {
       cookieName: "idToken",
       clientId: '',
     },
+    algolia: {
+      appId: 'ZQ9UF7RP1U',
+      key: '2e3cdcce6886af847e405a224b28f275',
+    },
   },
   privateRuntimeConfig: {
-
+    algolia: {
+      appId: 'ZQ9UF7RP1U',
+      key: '96d9607dba05c44480edfd1d9795ee65',
+    },
   },
 };
