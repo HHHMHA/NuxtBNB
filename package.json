@@ -8,7 +8,7 @@
     "body-parser": "1.19.0",
     "cloudinary-vue": "1.1.2",
     "cookie": "0.4.1",
-    "google-auth-library": "7.0.2",
+    "google-auth-library": "^7.0.2",
     "js-cookie": "^2.2.1",
     "nuxt": "2.14.7",
     "stripe": "8.148.0",
