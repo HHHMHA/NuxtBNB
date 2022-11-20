@@ -6,8 +6,15 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie';
 export default {
-  name: "admin"
+  name: "admin",
+  asyncData({ $config, redirect }) {
+    if (!Cookie.get($config.auth.cookieName)) {
+      redirect('/no-access/');
+      return;
+    }
+  }
 };
 </script>
 
