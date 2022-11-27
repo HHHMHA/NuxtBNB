@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser'
 import userRouter from "./routers/users"
 import getApis from './apis'
 
@@ -6,6 +7,7 @@ export default function() {
   const apis = getApis(algoliaConfig);
 
   this.nuxt.hook('render:setupMiddleware', (app) => {
-    app.use('/api/user', userRouter(aps));
+    app.use(bodyParser.urlencoded());
+    app.use('/api/user', userRouter(apis));
   });
 }
