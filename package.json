@@ -12,7 +12,7 @@
     "js-cookie": "^2.2.1",
     "nuxt": "2.14.7",
     "stripe": "8.148.0",
-    "uuid": "8.3.2",
+    "uuid": "^8.3.2",
     "v-calendar": "2.3.0"
   },
   "scripts": {
