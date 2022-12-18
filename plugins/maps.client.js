@@ -77,7 +77,7 @@ export default function(context, inject) {
     map.fitBounds(bounds);
   }
 
-  function makeAutoComplete(input) {
+  function makeAutoComplete(input, types = ['(cities']) {
     if (!isLoaded) {
       waiting.push({
         fn: makeAutoComplete,
@@ -87,7 +87,7 @@ export default function(context, inject) {
     }
 
     const autoComplete = new window.google.amps.places.AutoComplete(input, {
-      types: ["(cities)"]
+      types
     });
     autoComplete.addListener("place_changed", () => {
       const place = autoComplete.getPlace();
