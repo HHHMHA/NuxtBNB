@@ -44,11 +44,16 @@ export default {
     "~/modules/auth",
     "~/modules/algolia",
     "~/modules/cloudinary",
+    "@nuxtjs/cloudinary",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
   ],
+
+  cloudinary: {
+    cloudName: 'dno09jcsf'
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -84,6 +89,9 @@ export default {
       appId: 'ZQ9UF7RP1U',
       key: '2e3cdcce6886af847e405a224b28f275',
     },
+    cloudinary: {
+      apiKey: '739858233285687',
+    }
   },
   privateRuntimeConfig: {
     algolia: {
