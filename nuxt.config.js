@@ -43,6 +43,7 @@ export default {
   modules: [
     "~/modules/auth",
     "~/modules/algolia",
+    "~/modules/cloudinary",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
@@ -63,7 +64,7 @@ export default {
   },
 
   serverMiddleware: [
-    
+
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -88,6 +89,9 @@ export default {
     algolia: {
       appId: 'ZQ9UF7RP1U',
       key: '96d9607dba05c44480edfd1d9795ee65',
+    },
+    cloudinary: {
+      apiSecret: 'RKzZmtNR5UqQulX1BGzk_q9PbrI',
     },
   },
 };
