@@ -5,13 +5,13 @@
       Add a Home
     </h2>
     <form action="" class="form" @submit.prevent="onSubmit">
-      <ImageUploader></ImageUploader>
       Images: <br/>
-      <input type="text" v-model="home.images[0]" class="w-3/4"><br/>
-      <input type="text" v-model="home.images[1]" class="w-3/4"><br/>
-      <input type="text" v-model="home.images[2]" class="w-3/4"><br/>
-      <input type="text" v-model="home.images[3]" class="w-3/4"><br/>
-      <input type="text" v-model="home.images[4]" class="w-3/4"><br/>
+      <ImageUploader @file-uploaded="imageUpdated($event, 0)"></ImageUploader>
+      <ImageUploader @file-uploaded="imageUpdated($event, 1)"></ImageUploader>
+      <ImageUploader @file-uploaded="imageUpdated($event, 2)"></ImageUploader>
+      <ImageUploader @file-uploaded="imageUpdated($event, 3)"></ImageUploader>
+      <ImageUploader @file-uploaded="imageUpdated($event, 4)"></ImageUploader>
+
 
       Title: <br/>
       <input type="text" v-model="home.title" class="w-60"><br/>
@@ -85,6 +85,9 @@ export default {
           'Content-Type': 'application/json',
         }
       })
+    },
+    imageUpdated(imageUrl, index) {
+      this.home.images[index] = imageUrl;
     },
     changed(event) {
       const addressParts = event.detail.address_components;
