@@ -5,6 +5,11 @@ import {unWrap, getErrorResponse} from "../../../utils/fetchUtils";
 export default (algoliaConfig) => {
   const headers = getHeaders(algoliaConfig);
   return {
+    async assignHome(identity, homeId) {
+      const payload = (await this.getById(identity)).json;
+      payload.homeId.push(homeId);
+      this.create(identity, payload);
+    },
     async create(identity, payload) {
       try {
         const response = await fetch(`https://${algoliaConfig.appId}-dsn.algolia.net/1/indexes/users/${identity.id}`, {
