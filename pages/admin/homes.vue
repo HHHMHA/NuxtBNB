@@ -1,6 +1,8 @@
 <template>
   <div>
-    [LIST OF HOMES HERE]
+    <span v-for="home in homeList" :key="home.objectID">{{ home.title }}:
+      <button class="text-red-800">Delete</button>
+    </span>
     <h2 class="text-xl bold">
       Add a Home
     </h2>
@@ -48,6 +50,7 @@ export default {
   name: "homes",
   data() {
     return {
+      homeList: [],
       home: {
         title: '',
         description: '',
@@ -75,6 +78,7 @@ export default {
   },
   mounted() {
     this.$maps.makeAutoComplete(this.$refs.locationSelector, ['address']);
+    this.setHomesList();
   },
   methods: {
     async onSubmit() {
@@ -106,6 +110,9 @@ export default {
     getAddressParts(parts, type) {
       return parts.find(part => part.types.include(type));
     },
+  },
+  async setHomesList() {
+    this.homeList = (await unWrap(await fetch('/api/homes/user/'))).json;
   },
 };
 </script>

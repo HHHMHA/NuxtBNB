@@ -1,8 +1,12 @@
 import { rejectHitBadRequest, hasBadBody, sendJSON } from "../helpers";
 import {v4 as uuidv4} from 'uuid'
+import { unWrap } from "@/utils/fetchUtils";
 
 export default (apis) => {
   return async (req, res) => {
+    if (req.method === 'GET' && req.url === '/user/') {
+      return await getHomesByUser(req.identity.id, res);
+    }
     if (req.method === 'POST') {
       if (hasBadBody()) {
         return rejectHitBadRequest(res);
@@ -29,5 +33,10 @@ export default (apis) => {
     }
     await apis.user.assignHome(identity, homeId);
     sendJSON({}, res);
+  }
+
+  async function getHomesByUser(userId, res) {
+    const payload = (await apis.homes.getByUserId(userId)).json.hits;
+    sendJSON(payload, res);
   }
 }
