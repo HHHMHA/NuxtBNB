@@ -43,6 +43,19 @@ export default (algoliaConfig) => {
         return getErrorResponse(error);
       }
     },
+    async delete(homeId) {
+      try {
+        const response = await fetch(`https://${algoliaConfig.appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
+          headers,
+          method: 'DELETE',
+        });
+
+        return await unWrap(response);
+      }
+      catch (error) {
+        return getErrorResponse(error);
+      }
+    },
   }
 }
 

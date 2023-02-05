@@ -1,7 +1,7 @@
 <template>
   <div>
     <span v-for="home in homeList" :key="home.objectID">{{ home.title }}:
-      <button class="text-red-800">Delete</button>
+      <button class="text-red-800" @click="deleteHome(home.objectID)">Delete</button>
     </span>
     <h2 class="text-xl bold">
       Add a Home
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { unWrap } from "@/utils/fetchUtils";
+
 export default {
   name: "homes",
   data() {
@@ -82,12 +84,17 @@ export default {
   },
   methods: {
     async onSubmit() {
-      await fetch('/api/homes', {
+      const response = await unWrap(await fetch('/api/homes', {
         method: 'POST',
         body: JSON.stringify(this.home),
         headers: {
           'Content-Type': 'application/json',
         }
+      }));
+
+      this.homeList.push({
+        title: this.home.title,
+        objectID: response.json.homeId,
       })
     },
     imageUpdated(imageUrl, index) {
@@ -110,6 +117,13 @@ export default {
     getAddressParts(parts, type) {
       return parts.find(part => part.types.include(type));
     },
+    async deleteHome(homeId) {
+      await fetch(`/api/homes/${homeId}`, {
+        method: 'DELETE'
+      });
+      const index = this.homeList.findIndex(obj => obj.objectID === homeId);
+      this.homeList.splice(index, 1);
+    }
   },
   async setHomesList() {
     this.homeList = (await unWrap(await fetch('/api/homes/user/'))).json;
