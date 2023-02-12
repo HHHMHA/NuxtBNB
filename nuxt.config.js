@@ -37,6 +37,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/tailwindcss',
+    '@nuxt/image',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -50,9 +51,13 @@ export default {
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
   ],
-
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/dno09jcsf/image/upload/'
+    },
+  },
   cloudinary: {
-    cloudName: 'dno09jcsf'
+    cloudName: 'dno09jcsf',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
