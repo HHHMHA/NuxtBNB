@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import homes from '~/data/homes'
-
 export default {
   name: 'IndexPage',
   layout: 'default',
@@ -26,10 +24,10 @@ export default {
       }],
     };
   },
-  data() {
+  async asyncData({$dataAPI}) {
     return {
-      homes: homes.slice(0, 3),
+      homes: (await $dataAPI.getHomes()).json.hits
     }
-  },
+  }
 }
 </script>
