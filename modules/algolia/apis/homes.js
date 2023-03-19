@@ -10,13 +10,25 @@ export default (algoliaConfig) => {
   return {
     async create(homeId, payload) {
       try {
+        const availability = [];
+        payload.availabilityRanges.forEach(range => {
+          const start = new Date(range.start).getTime() / 1000;
+          const end = new Date(range.end) / 1000;
+          for (let day = start; day <= end; day += 86400 ) {
+            availability.push(day);
+          }
+        });
+
+        delete payload.availabilityRanges
+        payload.availability = availability
+
         const response = await fetch(`https://${algoliaConfig.appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
           headers,
           method: 'PUT',
           body: JSON.stringify(payload)
         });
 
-        return await unWrap(response);
+        return unWrap(response);
       }
       catch (error) {
         return getErrorResponse(error);
@@ -37,7 +49,7 @@ export default (algoliaConfig) => {
           })
         });
 
-        return await unWrap(response);
+        return unWrap(response);
       }
       catch (error) {
         return getErrorResponse(error);
@@ -50,7 +62,7 @@ export default (algoliaConfig) => {
           method: 'DELETE',
         });
 
-        return await unWrap(response);
+        return unWrap(response);
       }
       catch (error) {
         return getErrorResponse(error);
