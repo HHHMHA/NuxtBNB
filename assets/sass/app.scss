@@ -80,7 +80,7 @@ $cities: paris, new-york, london, dubai, san-francisco, cancun;
   &-search {
     @apply flex items-center;
 
-    > input {
+    input {
       @apply border-2 border-link-water rounded-lg text-lg py-3 px-2 mr-8;
 
       &.datepicker {
