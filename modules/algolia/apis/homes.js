@@ -2,7 +2,7 @@ import user from "@/modules/algolia/apis/user";
 
 export default
 import fetch from 'node-fetch';
-import { getHeaders } from "../helpers";
+import { getHeaders } from "../../helpers";
 import {unWrap, getErrorResponse} from "../../../utils/fetchUtils";
 
 export default (algoliaConfig) => {
@@ -60,6 +60,18 @@ export default (algoliaConfig) => {
         const response = await fetch(`https://${algoliaConfig.appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
           headers,
           method: 'DELETE',
+        });
+
+        return unWrap(response);
+      }
+      catch (error) {
+        return getErrorResponse(error);
+      }
+    },
+    async get(homeId) {
+      try {
+        const response = await fetch(`https://${algoliaConfig.appId}-dsn.algolia.net/1/indexes/homes/${homeId}`, {
+          headers,
         });
 
         return unWrap(response);

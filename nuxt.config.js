@@ -97,7 +97,10 @@ export default {
     },
     cloudinary: {
       apiKey: '739858233285687',
-    }
+    },
+    stripe: {
+      key: "",
+    },
   },
   privateRuntimeConfig: {
     algolia: {
@@ -106,6 +109,9 @@ export default {
     },
     cloudinary: {
       apiSecret: 'RKzZmtNR5UqQulX1BGzk_q9PbrI',
+    },
+    stripe: {
+      secretKey: process.env.STRIPE_SECRET_KEY,
     },
   },
 };
