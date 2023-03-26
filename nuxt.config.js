@@ -1,5 +1,4 @@
 export default {
-  rootUrl: process.env.NODE_ENV === 'production' ? 'https://nuxt-bn-b.vercel.app' : 'http://localhost:3000',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: "Mastering Nuxt: %s",
@@ -90,6 +89,7 @@ export default {
   },
 
   publicRuntimeConfig: {
+    rootUrl: process.env.NODE_ENV === 'production' ? 'https://nuxt-bn-b.vercel.app' : 'http://localhost:3000',
     auth: {
       cookieName: "idToken",
       clientId: '',

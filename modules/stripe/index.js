@@ -8,7 +8,7 @@ export default function() {
   const secretKey = this.options.privateRuntimeConfig.stripe.secretKey;
   const stripe = stripeLib(secretKey);
   const cloudName = this.options.cloudinary.cloudName;
-  const rootUrl = this.options.rootUrl;
+  const rootUrl = this.options.publicRuntimeConfig.rootUrl;
 
   this.nuxt.hook('render:setupMiddleware', (app) => {
     app.use("/api/stripe/create-session", createSession);
